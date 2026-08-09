@@ -10,6 +10,13 @@ All notable changes to this private skills registry are recorded here.
 
 ## Skill releases
 
+### story-prose-style 1.0.0 - 2026-08-09
+
+- Added project-specific prose-style extraction, maintenance, application and drift review.
+- Added reusable guidance for natural dialogue, restrained literary narration, plot-first prose, character voice and anti-template boundaries.
+- Added `style_fingerprint.py` for descriptive sentence, paragraph, dialogue, punctuation and template-risk comparison.
+- Added personal `$story` router integration guidance so style and Fanqie compliance skills complement the upstream story toolbox.
+
 ### story-fanqie-compliance 1.0.0 - 2026-08-09
 
 - Added Fanqie platform policy guidance and review rubric.

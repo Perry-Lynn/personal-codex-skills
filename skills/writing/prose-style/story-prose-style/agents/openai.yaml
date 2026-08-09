@@ -1,0 +1,4 @@
+interface:
+  display_name: "网文文风系统"
+  short_description: "提取、维护、应用和校准项目专属网文文风、正文指纹与角色声纹"
+  default_prompt: "使用 $story-prose-style 根据当前项目文风写作或校准这段正文。"
