@@ -1,0 +1,24 @@
+schema_version: 1
+repository_version: 1.0.0
+
+categories:
+  writing: Fiction writing, review, publishing and visual storytelling
+  data: Data analysis, SQL, dashboards and platform configuration
+  project: Project-specific engineering and knowledge-base workflows
+  creative: Image, mascot, cover and creative-production workflows
+  tooling: Skill creation, installation, validation and automation
+
+skills:
+  - name: story-fanqie-compliance
+    display_name: 番茄发布合规
+    version: 1.0.0
+    category: writing
+    function: publishing-compliance
+    path: skills/writing/publishing-compliance/story-fanqie-compliance
+    status: active
+    visibility: private
+    compatible_with:
+      - codex
+    source_path: ~/.codex/skills/story-fanqie-compliance
+    updated_at: 2026-08-09
+    summary: 番茄小说发布前合规、反水文、连续性与去AI味专项门禁

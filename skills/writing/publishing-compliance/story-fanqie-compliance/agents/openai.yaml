@@ -1,0 +1,4 @@
+interface:
+  display_name: "番茄发布合规"
+  short_description: "番茄小说发布前合规、反水文、连续性与去AI味专项审查"
+  default_prompt: "使用 $story-fanqie-compliance 对当前小说章节做番茄发布前合规审查并修复问题。"
