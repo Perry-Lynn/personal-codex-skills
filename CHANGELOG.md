@@ -2,6 +2,39 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.2.0 - 2026-08-12
+
+- Added four complementary Chinese-fiction skills for reader cold reads, language proofreading, originality auditing and post-publication performance diagnostics.
+- Added public documentation, version metadata and standard-library scripts for the new skills.
+- Added a repository-level interoperability guide for `worldwonderer/oh-story-claudecode`, including routing, recommended sequencing, handoff contracts and standalone fallback behavior.
+- Expanded the personal `$story` routing reference from two to six optional extensions without changing or claiming ownership of the upstream package.
+
+## Skill releases
+
+### story-prose-style 1.0.2 - 2026-08-12
+
+- Expanded the personal `$story` router integration reference to cover all six complementary skills and link the complete interoperability guide.
+
+### story-reader-cold-read 1.0.0 - 2026-08-12
+
+- Added a two-pass blind-reading protocol that isolates author-only materials before comparing reader experience with author intent.
+- Added reader knowledge, expectation debt, friction, drop-off and page-turn ledgers.
+
+### story-chinese-proofreading 1.0.0 - 2026-08-12
+
+- Added conservative Chinese-fiction proofreading for objective wording, syntax, reference, punctuation, numbers and proper-name issues.
+- Added `chinese_proofread.py` for deterministic formatting and repetition candidates while protecting intentional character voice.
+
+### story-originality-audit 1.0.0 - 2026-08-12
+
+- Added source-aware audits across wording, scene combinations, structural mappings and creative transformation.
+- Added `text_overlap.py` for exact normalized n-gram candidates against user-provided sources, with explicit legal and coverage limits.
+
+### story-serial-performance-diagnostics 1.0.0 - 2026-08-12
+
+- Added data-contract checks, funnel localization, reader-feedback coding, competing hypotheses and minimum validation plans for published serial fiction.
+- Added `serial_metrics.py` for transparent chapter-level descriptive metrics and explicit ratios.
+
 ## Repository 1.1.1 - 2026-08-12
 
 - Updated public clone URLs after the GitHub username changed to `Perry-Lynn`.
@@ -12,8 +45,6 @@ All notable skill releases and repository-level changes are recorded here.
 - Added the Apache License 2.0.
 - Rewrote the repository README with installation, usage, structure, versioning and safety guidance.
 - Added public user documentation for every published skill.
-
-## Skill releases
 
 ### story-prose-style 1.0.1 - 2026-08-12
 

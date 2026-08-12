@@ -1,0 +1,4 @@
+interface:
+  display_name: "连载数据诊断"
+  short_description: "根据章节指标和真实读者反馈诊断流失、追读与转化变化原因"
+  default_prompt: "使用 $story-serial-performance-diagnostics 分析这本连载小说的数据变化并给出验证方案。"

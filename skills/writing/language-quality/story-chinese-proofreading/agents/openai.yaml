@@ -1,0 +1,4 @@
+interface:
+  display_name: "中文小说校对"
+  short_description: "检查错字、病句、指代、标点、数字、单位和专名一致性问题"
+  default_prompt: "使用 $story-chinese-proofreading 校对这份中文小说正文，只修明确语言错误。"

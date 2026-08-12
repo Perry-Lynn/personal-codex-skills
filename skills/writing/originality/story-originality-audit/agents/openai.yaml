@@ -1,0 +1,4 @@
+interface:
+  display_name: "小说原创性审计"
+  short_description: "审查文字重合、来源依赖、桥段组合、结构映射和表达距离风险"
+  default_prompt: "使用 $story-originality-audit 审查这份小说与参考材料的原创性距离。"
