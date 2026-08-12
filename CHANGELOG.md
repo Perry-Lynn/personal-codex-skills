@@ -1,14 +1,30 @@
 # Changelog
 
-All notable changes to this private skills registry are recorded here.
+All notable skill releases and repository-level changes are recorded here.
+
+## Repository 1.1.0 - 2026-08-12
+
+- Prepared the registry for public use and updated visibility metadata.
+- Added the Apache License 2.0.
+- Rewrote the repository README with installation, usage, structure, versioning and safety guidance.
+- Added public user documentation for every published skill.
+
+## Skill releases
+
+### story-prose-style 1.0.1 - 2026-08-12
+
+- Added a complete public-facing guide with trigger examples, modes, review dimensions and script usage.
+
+### story-fanqie-compliance 1.0.1 - 2026-08-12
+
+- Added a complete public-facing guide with trigger examples, modes, grading and script usage.
+- Clarified that the bundled platform policy is a dated, unofficial execution summary.
 
 ## Repository 1.0.0 - 2026-08-09
 
-- Created the private personal skills registry.
+- Created the personal skills registry.
 - Established category/function directory conventions and semantic-version rules.
 - Added `story-fanqie-compliance` version `1.0.0` under `writing/publishing-compliance`.
-
-## Skill releases
 
 ### story-prose-style 1.0.0 - 2026-08-09
 
