@@ -2,6 +2,10 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.1.1 - 2026-08-12
+
+- Updated public clone URLs after the GitHub username changed to `Perry-Lynn`.
+
 ## Repository 1.1.0 - 2026-08-12
 
 - Prepared the registry for public use and updated visibility metadata.
