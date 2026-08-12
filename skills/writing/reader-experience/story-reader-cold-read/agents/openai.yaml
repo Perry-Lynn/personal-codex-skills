@@ -1,0 +1,4 @@
+interface:
+  display_name: "读者盲读审查"
+  short_description: "隔离作者资料，复原真实读者的信息、情绪、跳读与弃读体验"
+  default_prompt: "使用 $story-reader-cold-read 对这篇小说做一次不看大纲的读者盲读。"

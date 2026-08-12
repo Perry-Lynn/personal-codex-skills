@@ -1,5 +1,5 @@
 schema_version: 1
-repository_version: 1.1.1
+repository_version: 1.2.0
 
 categories:
   writing: Fiction writing, review, publishing and visual storytelling
@@ -9,6 +9,26 @@ categories:
   tooling: Skill creation, installation, validation and automation
 
 skills:
+  - name: story-chinese-proofreading
+    display_name: 中文小说校对
+    version: 1.0.0
+    category: writing
+    function: language-quality
+    path: skills/writing/language-quality/story-chinese-proofreading
+    documentation: docs/skills/story-chinese-proofreading.md
+    status: active
+    visibility: public
+    compatible_with:
+      - codex
+    complements:
+      - story-review
+      - story-deslop
+      - story-long-write
+      - story-short-write
+    source_path: ~/.codex/skills/story-chinese-proofreading
+    updated_at: 2026-08-12
+    summary: 中文小说错字、病句、指代、标点、数字单位和专名一致性终校
+
   - name: story-fanqie-compliance
     display_name: 番茄发布合规
     version: 1.0.1
@@ -20,13 +40,40 @@ skills:
     visibility: public
     compatible_with:
       - codex
+    complements:
+      - story-review
+      - story-deslop
+      - story-chinese-proofreading
     source_path: ~/.codex/skills/story-fanqie-compliance
     updated_at: 2026-08-12
     summary: 番茄小说发布前合规、反水文、连续性与去AI味专项门禁
 
+  - name: story-originality-audit
+    display_name: 小说原创性审计
+    version: 1.0.0
+    category: writing
+    function: originality
+    path: skills/writing/originality/story-originality-audit
+    documentation: docs/skills/story-originality-audit.md
+    status: active
+    visibility: public
+    compatible_with:
+      - codex
+    complements:
+      - story-long-scan
+      - story-short-scan
+      - story-long-analyze
+      - story-short-analyze
+      - story-long-write
+      - story-short-write
+      - story-review
+    source_path: ~/.codex/skills/story-originality-audit
+    updated_at: 2026-08-12
+    summary: 比较文字、场景、结构与来源依赖，审计小说原创性距离
+
   - name: story-prose-style
     display_name: 网文文风系统
-    version: 1.0.1
+    version: 1.0.2
     category: writing
     function: prose-style
     path: skills/writing/prose-style/story-prose-style
@@ -45,3 +92,43 @@ skills:
     source_path: ~/.codex/skills/story-prose-style
     updated_at: 2026-08-12
     summary: 提取、维护、应用和校准项目专属网文文风、正文指纹与角色声纹
+
+  - name: story-reader-cold-read
+    display_name: 读者盲读审查
+    version: 1.0.0
+    category: writing
+    function: reader-experience
+    path: skills/writing/reader-experience/story-reader-cold-read
+    documentation: docs/skills/story-reader-cold-read.md
+    status: active
+    visibility: public
+    compatible_with:
+      - codex
+    complements:
+      - story-long-write
+      - story-short-write
+      - story-review
+    source_path: ~/.codex/skills/story-reader-cold-read
+    updated_at: 2026-08-12
+    summary: 隔离作者资料，以两遍协议复原读者理解、情绪、弃读点和期待债务
+
+  - name: story-serial-performance-diagnostics
+    display_name: 连载数据诊断
+    version: 1.0.0
+    category: writing
+    function: performance-diagnostics
+    path: skills/writing/performance-diagnostics/story-serial-performance-diagnostics
+    documentation: docs/skills/story-serial-performance-diagnostics.md
+    status: active
+    visibility: public
+    compatible_with:
+      - codex
+    complements:
+      - story-long-scan
+      - story-short-scan
+      - story-review
+      - story-long-write
+      - story-short-write
+    source_path: ~/.codex/skills/story-serial-performance-diagnostics
+    updated_at: 2026-08-12
+    summary: 依据发布后章节数据和真实反馈诊断流失、追读与转化变化
