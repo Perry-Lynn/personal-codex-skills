@@ -18,7 +18,7 @@
 把目标 skill 目录复制到 Codex 的个人 skills 目录：
 
 ```bash
-git clone https://github.com/fupengyu1/personal-codex-skills.git
+git clone https://github.com/Perry-Lynn/personal-codex-skills.git
 mkdir -p ~/.codex/skills
 cp -R personal-codex-skills/skills/writing/prose-style/story-prose-style ~/.codex/skills/
 cp -R personal-codex-skills/skills/writing/publishing-compliance/story-fanqie-compliance ~/.codex/skills/
@@ -31,7 +31,7 @@ cp -R personal-codex-skills/skills/writing/publishing-compliance/story-fanqie-co
 克隆仓库后，将目标 skill 目录链接到 `~/.codex/skills/`。这样拉取仓库更新后，不需要重复复制文件。
 
 ```bash
-git clone https://github.com/fupengyu1/personal-codex-skills.git
+git clone https://github.com/Perry-Lynn/personal-codex-skills.git
 mkdir -p ~/.codex/skills
 ln -s "$(pwd)/personal-codex-skills/skills/writing/prose-style/story-prose-style" ~/.codex/skills/story-prose-style
 ln -s "$(pwd)/personal-codex-skills/skills/writing/publishing-compliance/story-fanqie-compliance" ~/.codex/skills/story-fanqie-compliance
