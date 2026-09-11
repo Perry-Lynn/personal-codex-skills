@@ -2,6 +2,11 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.4 - 2026-09-11
+
+- Moved category-specific installation, quick-use, development and validation instructions into the corresponding directory README files.
+- Simplified the root README into a project overview and directory navigation entry point.
+
 ## Repository 1.3.3 - 2026-09-11
 
 - Added configurable Planner and Executor selection to `model-router`.
