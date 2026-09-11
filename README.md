@@ -84,7 +84,15 @@ ln -s "$(pwd)/personal-codex-skills/skills/tooling/model-routing/model-router" ~
 
 ## Skill 说明
 
-### story-prose-style
+下面按仓库中的实际目录介绍。写作能力集中在 `skills/writing/`，Codex 工作流能力集中在 `skills/tooling/`。
+
+### `skills/writing/`
+
+面向中文网络小说的创作辅助、读者体验、语言质量、原创性、平台合规和连载复盘。每个功能目录下都放置一个独立 skill。
+
+#### `skills/writing/prose-style/`
+
+##### `story-prose-style`
 
 负责项目专属文风，而不是把所有作品统一成一种“高级感”。它会区分对白声音、叙述声音、句段节奏、题材气质和角色声纹，并把量化指标当作漂移信号，而不是机械写作配额。
 
@@ -95,25 +103,33 @@ ln -s "$(pwd)/personal-codex-skills/skills/tooling/model-routing/model-router" ~
 
 完整说明、示例与脚本用法见 [`docs/skills/story-prose-style.md`](docs/skills/story-prose-style.md)。
 
-### story-reader-cold-read
+#### `skills/writing/reader-experience/`
+
+##### `story-reader-cold-read`
 
 负责受控读者盲读。第一遍不看作者资料，只记录读者已知、误解、情绪、弃读点和翻页动力；第二遍再与大纲和设定对照，避免作者知识替正文补洞。
 
 完整说明见 [`docs/skills/story-reader-cold-read.md`](docs/skills/story-reader-cold-read.md)。
 
-### story-chinese-proofreading
+#### `skills/writing/language-quality/`
+
+##### `story-chinese-proofreading`
 
 负责明确语言错误和格式一致性终校，保护角色口语、方言和有意断句。它不会代替综合审查，也不会以“更文学”为理由润色。
 
 完整说明与脚本用法见 [`docs/skills/story-chinese-proofreading.md`](docs/skills/story-chinese-proofreading.md)。
 
-### story-originality-audit
+#### `skills/writing/originality/`
+
+##### `story-originality-audit`
 
 负责逐来源比较文字、场景、结构和生成机制，区分题材惯例、独立表达、来源依赖和高风险近似。工具结果只是候选，不是法律结论。
 
 完整说明与脚本用法见 [`docs/skills/story-originality-audit.md`](docs/skills/story-originality-audit.md)。
 
-### story-fanqie-compliance
+#### `skills/writing/publishing-compliance/`
+
+##### `story-fanqie-compliance`
 
 负责番茄小说发布前门禁，将平台硬红线、广告引流、现实隐私、恶意水文、故事连续性和去 AI 味前置检查放在同一套流程中。
 
@@ -124,13 +140,21 @@ ln -s "$(pwd)/personal-codex-skills/skills/tooling/model-routing/model-router" ~
 
 完整说明、示例与脚本用法见 [`docs/skills/story-fanqie-compliance.md`](docs/skills/story-fanqie-compliance.md)。
 
-### story-serial-performance-diagnostics
+#### `skills/writing/performance-diagnostics/`
+
+##### `story-serial-performance-diagnostics`
 
 负责发布后的指标和评论复盘，先核对口径与异常位置，再建立内容、流量、发布和数据竞争假设，并把验证后的修订目标交回写作流程。
 
 完整说明与脚本用法见 [`docs/skills/story-serial-performance-diagnostics.md`](docs/skills/story-serial-performance-diagnostics.md)。
 
-### model-router
+### `skills/tooling/`
+
+面向 Codex 本身的开发协作和工具编排，不属于中文小说写作能力。
+
+#### `skills/tooling/model-routing/`
+
+##### `model-router`
 
 负责把复杂开发任务分给两个独立 Codex 对话：Astra 以 low 推理强度规划和审查，Luna 以 high 推理强度实现和测试。它通过带 ID 的消息交接计划与结果，并保持单一写入者和明确的工作树边界。
 

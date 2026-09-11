@@ -2,6 +2,11 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.1 - 2026-09-11
+
+- Reorganized README skill introductions by their `skills/writing/` and `skills/tooling/` directory paths.
+- Added the Codex tooling directory to the repository overview and installation documentation.
+
 ## Repository 1.3.0 - 2026-09-11
 
 - Published the `model-router` Codex tooling skill under `skills/tooling/model-routing/model-router`.
