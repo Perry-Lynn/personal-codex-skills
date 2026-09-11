@@ -28,4 +28,4 @@
 python3 skills/writing/language-quality/story-chinese-proofreading/scripts/chinese_proofread.py <file-or-directory>
 ```
 
-脚本无报错不代表人工语义校对完成。综合审查与连续性交给 `story-review`，去 AI 味后应重新终校。
+返回码为 `0`（输入有效且无候选）、`1`（输入有效但发现候选）或 `2`（路径、扩展名、空目录、空白输入、读取或编码错误）。脚本无候选不代表人工语义校对完成；综合审查与连续性交给 `story-review`，去 AI 味后应重新终校。

@@ -2,6 +2,13 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.6 - 2026-09-11
+
+- Hardened writing-skill script input validation, adjacency metrics, project-scope filtering and machine-readable diagnostics.
+- Clarified cold-read contamination, snapshot/order freezing and authorization boundaries.
+- Fixed writing-skill installation and validation examples to honor `CODEX_HOME`, fail clearly when the validator is absent, and run regression tests.
+- Bumped `story-chinese-proofreading` to 1.0.1, `story-originality-audit` to 1.0.1, `story-serial-performance-diagnostics` to 1.0.1, `story-reader-cold-read` to 1.0.1 and `story-fanqie-compliance` to 1.0.2.
+
 ## Repository 1.3.5 - 2026-09-11
 
 - Clarified that `SKILL.md` is the required skill entry point and that `agents/`, `references/` and `scripts/` are optional supporting directories.

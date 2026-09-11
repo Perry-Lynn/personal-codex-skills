@@ -6,15 +6,47 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 TEXT_SUFFIXES = {".md", ".txt"}
+SKIP_DIRS = {".git", "node_modules"}
+
+
+class InputError(ValueError):
+    """Raised when the requested comparison scope cannot be checked."""
 
 
 def read_path(path: Path):
+    if not path.exists():
+        raise InputError(f"路径不存在: {path}")
     if path.is_file():
-        return [(path, path.read_text(encoding="utf-8-sig"))]
-    return [(item, item.read_text(encoding="utf-8-sig")) for item in sorted(path.rglob("*")) if item.is_file() and item.suffix.lower() in TEXT_SUFFIXES and ".git" not in item.parts]
+        if path.suffix.lower() not in TEXT_SUFFIXES:
+            raise InputError(f"不支持的文件扩展名: {path}")
+        candidates = [path.resolve()]
+    elif path.is_dir():
+        candidates = [
+            item.resolve()
+            for item in sorted(path.rglob("*"))
+            if item.is_file()
+            and item.suffix.lower() in TEXT_SUFFIXES
+            and not any(part in SKIP_DIRS or part.startswith(".") for part in item.relative_to(path).parts[:-1])
+        ]
+        if not candidates:
+            raise InputError(f"路径中没有可比较的 .md/.txt 文件: {path}")
+    else:
+        raise InputError(f"不是文件或目录: {path}")
+
+    entries = []
+    for candidate in candidates:
+        try:
+            text = candidate.read_text(encoding="utf-8-sig")
+        except (OSError, UnicodeError) as exc:
+            raise InputError(f"无法读取 {candidate}: {exc}") from exc
+        if not text.strip():
+            raise InputError(f"输入为空白: {candidate}")
+        entries.append((candidate, text))
+    return entries
 
 
 def normalize(text: str):
@@ -22,7 +54,7 @@ def normalize(text: str):
 
 
 def ngrams(text: str, width: int):
-    return {text[index:index + width] for index in range(max(0, len(text) - width + 1))}
+    return {text[index:index + width] for index in range(len(text) - width + 1)}
 
 
 def main():
@@ -34,10 +66,21 @@ def main():
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     if args.ngram < 8:
-        raise SystemExit("--ngram 不应小于 8，过短会产生大量无意义重合")
+        print("ERROR: --ngram 不应小于 8，过短会产生大量无意义重合", file=sys.stderr)
+        return 2
+    if args.limit <= 0:
+        print("ERROR: --limit 必须为正数", file=sys.stderr)
+        return 2
 
-    manuscript_files = read_path(args.manuscript)
-    source_files = [entry for path in args.sources for entry in read_path(path)]
+    try:
+        manuscript_files = read_path(args.manuscript)
+        source_files = [entry for path in args.sources for entry in read_path(path)]
+        for path, text in [*manuscript_files, *source_files]:
+            if len(normalize(text)) < args.ngram:
+                raise InputError(f"规范化文本短于 --ngram={args.ngram}: {path}")
+    except (InputError, OSError, UnicodeError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
     findings = []
     for manuscript_path, manuscript_text in manuscript_files:
         manuscript_norm = normalize(manuscript_text)
@@ -68,8 +111,10 @@ def main():
             print(f"{finding['manuscript']} <> {finding['source']}: {finding['shared_count']} shared candidate(s)")
             for example in finding["examples"]:
                 print(f"  {example}")
-        print("候选重合需要人工判断；零结果不代表绝对原创。")
+        print("候选重合需要人工判断；比较完成但零候选不代表绝对原创。")
+
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

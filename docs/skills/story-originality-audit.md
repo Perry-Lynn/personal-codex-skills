@@ -27,4 +27,6 @@ python3 skills/writing/originality/story-originality-audit/scripts/text_overlap.
 
 工具只比较用户提供来源中的规范化字符片段，结果是人工审计候选。零结果不代表绝对原创，相似度也不能直接替代法律判断。
 
+返回码为 `0`（比较完成，无论是否有候选）或 `2`（稿件/来源路径、扩展名、空目录、空白输入、读取错误、`--ngram < 8`、`--limit <= 0`、文本短于 n-gram 或没有可比较材料）。
+
 与 oh-story-claudecode 配合时，应从 scan/analyze 阶段登记来源，在 write 阶段形成独立故事核，成稿后再审计；需要重构时交回写作 skill。

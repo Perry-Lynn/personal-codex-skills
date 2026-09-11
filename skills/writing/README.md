@@ -19,11 +19,13 @@
 
 ```bash
 git clone https://github.com/Perry-Lynn/personal-codex-skills.git
-mkdir -p ~/.codex/skills
-cp -R skills/writing/prose-style/story-prose-style ~/.codex/skills/
+cd personal-codex-skills
+CODEX_ROOT="${CODEX_HOME:-$HOME/.codex}"
+mkdir -p "$CODEX_ROOT/skills"
+cp -R skills/writing/prose-style/story-prose-style "$CODEX_ROOT/skills/"
 ```
 
-其他 skill 的安装路径就是表格中的功能目录加 skill 名称。也可以将目录链接到 `~/.codex/skills/`，便于跟随仓库更新。安装后重新打开 Codex 任务，使技能清单刷新。
+其他 skill 的安装路径就是表格中的功能目录加 skill 名称。也可以将目录链接到 `$CODEX_ROOT/skills/`，便于跟随仓库更新。安装后重新打开 Codex 任务，使技能清单刷新。本文件位于 `skills/writing/README.md`，表格与互操作说明中的 `../../docs/...` 链接均相对于仓库根目录解析。
 
 ## 快速使用
 
@@ -54,9 +56,16 @@ cp -R skills/writing/prose-style/story-prose-style ~/.codex/skills/
 修改本目录下的 skill 后，使用 Codex `skill-creator` 的 `quick_validate.py` 检查目录和 YAML frontmatter。仓库内写作脚本仅使用标准库，可检查帮助信息：
 
 ```bash
+CODEX_ROOT="${CODEX_HOME:-$HOME/.codex}"
+VALIDATOR="$CODEX_ROOT/skills/.system/skill-creator/scripts/quick_validate.py"
+if [ ! -f "$VALIDATOR" ]; then
+  echo "quick_validate.py not found: $VALIDATOR" >&2
+  exit 2
+fi
 for d in skills/writing/*/*; do
-  [ -f "$d/SKILL.md" ] && python3 /Users/fupengyu/.codex/skills/.system/skill-creator/scripts/quick_validate.py "$d"
+  [ -f "$d/SKILL.md" ] && python3 "$VALIDATOR" "$d"
 done
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 skills/writing/prose-style/story-prose-style/scripts/style_fingerprint.py --help
 python3 skills/writing/language-quality/story-chinese-proofreading/scripts/chinese_proofread.py --help
 python3 skills/writing/originality/story-originality-audit/scripts/text_overlap.py --help

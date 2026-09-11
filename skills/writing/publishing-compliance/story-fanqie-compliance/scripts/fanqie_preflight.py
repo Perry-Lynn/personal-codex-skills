@@ -16,6 +16,18 @@ from pathlib import Path
 
 
 TEXT_SUFFIXES = {".md", ".txt"}
+EXCLUDED_DIRS = {
+    ".git",
+    "归档",
+    "追踪",
+    "设定",
+    "大纲",
+    "参考资料",
+    "对标",
+    "拆文库",
+    "reports",
+    "node_modules",
+}
 ENGINEERING_RE = re.compile(
     r"(?:第[一二三四五六七八九十百千万两0-9]+章|上一章|上章|前一章|本章|这一章|"
     r"前文|后文|细纲|读者|爽点|伏笔|任务卡|章节定位)"
@@ -48,12 +60,25 @@ def collect_files(raw_paths: list[str]) -> list[Path]:
         if not path.exists():
             raise FileNotFoundError(raw)
         if path.is_file():
-            if path.suffix.lower() in TEXT_SUFFIXES:
-                files.add(path.resolve())
+            if path.suffix.lower() not in TEXT_SUFFIXES:
+                raise ValueError(f"unsupported file extension: {path}")
+            # An explicitly named file is always in scope, even if it lives
+            # under a directory normally excluded from project scans.
+            files.add(path.resolve())
             continue
-        for candidate in path.rglob("*"):
-            if candidate.is_file() and candidate.suffix.lower() in TEXT_SUFFIXES:
-                files.add(candidate.resolve())
+        if not path.is_dir():
+            raise ValueError(f"not a file or directory: {path}")
+
+        # A project with a dedicated 正文/ subtree has an unambiguous public
+        # reading scope.  Do not let adjacent authoring material contaminate it.
+        scan_root = path / "正文" if (path / "正文").is_dir() else path
+        for candidate in scan_root.rglob("*"):
+            if not candidate.is_file() or candidate.suffix.lower() not in TEXT_SUFFIXES:
+                continue
+            relative_parts = candidate.relative_to(scan_root).parts
+            if any(part.startswith(".") or part in EXCLUDED_DIRS for part in relative_parts[:-1]):
+                continue
+            files.add(candidate.resolve())
     return sorted(files)
 
 
@@ -62,7 +87,7 @@ def normalized_paragraph(text: str) -> str:
 
 
 def scan_file(path: Path) -> tuple[list[dict], dict]:
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8-sig")
     lines = text.splitlines()
     findings: list[dict] = []
     paragraphs: dict[str, list[int]] = defaultdict(list)
@@ -162,7 +187,7 @@ def main() -> int:
     args = parse_args()
     try:
         files = collect_files(args.paths)
-    except (OSError, FileNotFoundError) as exc:
+    except (OSError, ValueError, FileNotFoundError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
     if not files:

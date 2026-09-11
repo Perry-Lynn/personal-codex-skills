@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 TEXT_SUFFIXES = {".md", ".txt"}
@@ -14,16 +15,30 @@ PAIRS = {"（": "）", "[": "]", "【": "】", "《": "》", "〈": "〉"}
 REVERSE = {value: key for key, value in PAIRS.items()}
 
 
+class InputError(ValueError):
+    """Raised when the requested proofreading scope cannot be checked."""
+
+
 def iter_files(paths: list[Path]):
     for path in paths:
-        if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES:
-            yield path
-        elif path.is_dir():
-            for item in sorted(path.rglob("*")):
-                if any(part in SKIP_DIRS for part in item.parts):
-                    continue
-                if item.is_file() and item.suffix.lower() in TEXT_SUFFIXES:
-                    yield item
+        if not path.exists():
+            raise InputError(f"路径不存在: {path}")
+        if path.is_file():
+            if path.suffix.lower() not in TEXT_SUFFIXES:
+                raise InputError(f"不支持的文件扩展名: {path}")
+            yield path.resolve()
+            continue
+        if not path.is_dir():
+            raise InputError(f"不是文件或目录: {path}")
+        found = False
+        for item in sorted(path.rglob("*")):
+            if any(part in SKIP_DIRS for part in item.parts):
+                continue
+            if item.is_file() and item.suffix.lower() in TEXT_SUFFIXES:
+                found = True
+                yield item.resolve()
+        if not found:
+            raise InputError(f"目录中没有可检查的 .md/.txt 文件: {path}")
 
 
 def add(findings, path, line, column, code, message, excerpt):
@@ -78,8 +93,22 @@ def main():
     parser.add_argument("--json", action="store_true", help="输出 JSON")
     args = parser.parse_args()
 
-    files = list(dict.fromkeys(iter_files(args.paths)))
-    findings = [item for path in files for item in check_file(path)]
+    try:
+        files = list(dict.fromkeys(iter_files(args.paths)))
+        if not files:
+            raise InputError("没有可检查的文件")
+        findings = []
+        for path in files:
+            try:
+                text = path.read_text(encoding="utf-8-sig")
+            except (OSError, UnicodeError) as exc:
+                raise InputError(f"无法读取 {path}: {exc}") from exc
+            if not text.strip():
+                raise InputError(f"输入为空白: {path}")
+            findings.extend(check_file(path))
+    except (InputError, OSError, UnicodeError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
     if args.json:
         print(json.dumps({"files_checked": len(files), "findings": findings}, ensure_ascii=False, indent=2))
     else:

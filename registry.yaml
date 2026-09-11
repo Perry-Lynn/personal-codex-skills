@@ -1,5 +1,5 @@
 schema_version: 1
-repository_version: 1.3.5
+repository_version: 1.3.6
 
 categories:
   writing: Fiction writing, review, publishing and visual storytelling
@@ -11,7 +11,7 @@ categories:
 skills:
   - name: story-chinese-proofreading
     display_name: 中文小说校对
-    version: 1.0.0
+    version: 1.0.1
     category: writing
     function: language-quality
     path: skills/writing/language-quality/story-chinese-proofreading
@@ -31,7 +31,7 @@ skills:
 
   - name: story-fanqie-compliance
     display_name: 番茄发布合规
-    version: 1.0.1
+    version: 1.0.2
     category: writing
     function: publishing-compliance
     path: skills/writing/publishing-compliance/story-fanqie-compliance
@@ -50,7 +50,7 @@ skills:
 
   - name: story-originality-audit
     display_name: 小说原创性审计
-    version: 1.0.0
+    version: 1.0.1
     category: writing
     function: originality
     path: skills/writing/originality/story-originality-audit
@@ -95,7 +95,7 @@ skills:
 
   - name: story-reader-cold-read
     display_name: 读者盲读审查
-    version: 1.0.0
+    version: 1.0.1
     category: writing
     function: reader-experience
     path: skills/writing/reader-experience/story-reader-cold-read
@@ -114,7 +114,7 @@ skills:
 
   - name: story-serial-performance-diagnostics
     display_name: 连载数据诊断
-    version: 1.0.0
+    version: 1.0.1
     category: writing
     function: performance-diagnostics
     path: skills/writing/performance-diagnostics/story-serial-performance-diagnostics
