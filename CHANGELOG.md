@@ -2,6 +2,11 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.2 - 2026-09-11
+
+- Replaced the root README's flat skill descriptions with a clear top-level directory overview.
+- Added directory-level README files for writing skills, tooling skills and model routing, with links to detailed documentation.
+
 ## Repository 1.3.1 - 2026-09-11
 
 - Reorganized README skill introductions by their `skills/writing/` and `skills/tooling/` directory paths.

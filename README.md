@@ -2,19 +2,14 @@
 
 一组面向 Codex 的个人 Skills，覆盖中文网络小说创作与发布检查，以及双模型开发协作。每个 skill 都是独立、可安装、可版本化的能力包，包含触发说明、执行流程、参考资料和可重复运行的检查脚本。
 
-当前仓库提供六个写作 skill 和一个 Codex 工具 skill：
+当前仓库分为两个用途清晰的目录：
 
-| Skill | 解决什么问题 | 适合什么时候使用 | 当前版本 |
-|---|---|---|---|
-| [`story-prose-style`](docs/skills/story-prose-style.md) | 建立、应用和校准项目专属文风与角色声纹 | 文风提取、续写前校准、对白口语化、检查文风漂移 | 1.0.2 |
-| [`story-reader-cold-read`](docs/skills/story-reader-cold-read.md) | 隔离作者资料，复原读者实际理解与情绪 | 盲读开篇、查弃读点、验证悬念和信息差 | 1.0.0 |
-| [`story-chinese-proofreading`](docs/skills/story-chinese-proofreading.md) | 执行中文小说字词句、标点和专名终校 | 错别字、病句、指代歧义、数字单位与称谓统一 | 1.0.0 |
-| [`story-originality-audit`](docs/skills/story-originality-audit.md) | 审查稿件与已知来源的表达和结构距离 | 洗稿自查、撞梗判断、同人转原创、改编审计 | 1.0.0 |
-| [`story-fanqie-compliance`](docs/skills/story-fanqie-compliance.md) | 执行番茄小说发布前的合规、低质与连续性检查 | 发布前检查、拒审诊断、合规修订、反水文审查 | 1.0.1 |
-| [`story-serial-performance-diagnostics`](docs/skills/story-serial-performance-diagnostics.md) | 用发布后数据和反馈诊断流失与转化变化 | 追读下降、完读变化、章留、评论与发布复盘 | 1.0.0 |
-| [`model-router`](docs/skills/model-router.md) | 协调 Astra 规划对话与 Luna 实施对话 | 复杂开发、双对话交接、实现与验收 | 2.0.1 |
+| 顶层目录 | 提供什么 | 目录说明 |
+|---|---|---|
+| [`skills/writing/`](skills/writing/README.md) | 六个中文网络小说写作与发布辅助 skill | 进入目录查看各功能子目录和安装方式 |
+| [`skills/tooling/`](skills/tooling/README.md) | Codex 自身的工具和工作流 skill | 进入目录查看模型路由等开发工具 |
 
-> 这些 skill 提供写作与发布前辅助，不代表平台官方意见，也不承诺作品一定通过审核或获得推荐。
+> 这些 skill 提供写作、发布前和 Codex 开发协作辅助，不代表平台官方意见，也不承诺作品一定通过审核或获得推荐。
 
 ## 安装
 
@@ -84,88 +79,16 @@ ln -s "$(pwd)/personal-codex-skills/skills/tooling/model-routing/model-router" ~
 
 ## Skill 说明
 
-下面按仓库中的实际目录介绍。写作能力集中在 `skills/writing/`，Codex 工作流能力集中在 `skills/tooling/`。
-
-### `skills/writing/`
-
-面向中文网络小说的创作辅助、读者体验、语言质量、原创性、平台合规和连载复盘。每个功能目录下都放置一个独立 skill。
-
-#### `skills/writing/prose-style/`
-
-##### `story-prose-style`
-
-负责项目专属文风，而不是把所有作品统一成一种“高级感”。它会区分对白声音、叙述声音、句段节奏、题材气质和角色声纹，并把量化指标当作漂移信号，而不是机械写作配额。
-
-- 支持建立文风、应用文风、文风校准、维护指纹和局部回炉。
-- 支持长篇、短篇、独立稿件与已有项目。
-- 自带 `style_fingerprint.py`，可比较稳定样本与目标章节。
-- 默认保留剧情事实和人物动机；涉及连续性变化时交回写作流程处理。
-
-完整说明、示例与脚本用法见 [`docs/skills/story-prose-style.md`](docs/skills/story-prose-style.md)。
-
-#### `skills/writing/reader-experience/`
-
-##### `story-reader-cold-read`
-
-负责受控读者盲读。第一遍不看作者资料，只记录读者已知、误解、情绪、弃读点和翻页动力；第二遍再与大纲和设定对照，避免作者知识替正文补洞。
-
-完整说明见 [`docs/skills/story-reader-cold-read.md`](docs/skills/story-reader-cold-read.md)。
-
-#### `skills/writing/language-quality/`
-
-##### `story-chinese-proofreading`
-
-负责明确语言错误和格式一致性终校，保护角色口语、方言和有意断句。它不会代替综合审查，也不会以“更文学”为理由润色。
-
-完整说明与脚本用法见 [`docs/skills/story-chinese-proofreading.md`](docs/skills/story-chinese-proofreading.md)。
-
-#### `skills/writing/originality/`
-
-##### `story-originality-audit`
-
-负责逐来源比较文字、场景、结构和生成机制，区分题材惯例、独立表达、来源依赖和高风险近似。工具结果只是候选，不是法律结论。
-
-完整说明与脚本用法见 [`docs/skills/story-originality-audit.md`](docs/skills/story-originality-audit.md)。
-
-#### `skills/writing/publishing-compliance/`
-
-##### `story-fanqie-compliance`
-
-负责番茄小说发布前门禁，将平台硬红线、广告引流、现实隐私、恶意水文、故事连续性和去 AI 味前置检查放在同一套流程中。
-
-- 支持写作前约束、发布前审查、拒审诊断、合规修订和规范维护。
-- 使用 `BLOCK`、`FIX`、`REVIEW`、`PASS` 四级结论。
-- 自带 `fanqie_preflight.py`，检查重复段落、工程词、乱码、明显引流和绕审表达。
-- `PASS` 只表示受检范围未发现已定义风险，不代表平台保证通过。
-
-完整说明、示例与脚本用法见 [`docs/skills/story-fanqie-compliance.md`](docs/skills/story-fanqie-compliance.md)。
-
-#### `skills/writing/performance-diagnostics/`
-
-##### `story-serial-performance-diagnostics`
-
-负责发布后的指标和评论复盘，先核对口径与异常位置，再建立内容、流量、发布和数据竞争假设，并把验证后的修订目标交回写作流程。
-
-完整说明与脚本用法见 [`docs/skills/story-serial-performance-diagnostics.md`](docs/skills/story-serial-performance-diagnostics.md)。
-
-### `skills/tooling/`
-
-面向 Codex 本身的开发协作和工具编排，不属于中文小说写作能力。
-
-#### `skills/tooling/model-routing/`
-
-##### `model-router`
-
-负责把复杂开发任务分给两个独立 Codex 对话：Astra 以 low 推理强度规划和审查，Luna 以 high 推理强度实现和测试。它通过带 ID 的消息交接计划与结果，并保持单一写入者和明确的工作树边界。
-
-完整说明见 [`docs/skills/model-router.md`](docs/skills/model-router.md)。
+详细说明按目录维护：先进入上表的目录 README，再进入具体功能目录或技能目录。不要把两个目录混用：`writing` 面向作品内容，`tooling` 面向 Codex 开发过程。
 
 ## 仓库结构
 
 ```text
 skills/
   <category>/
+    README.md         # 该类别的总览和子目录导航
     <function>/
+      README.md       # 该功能目录的说明（如有）
       <skill-name>/
         SKILL.md          # Codex 读取的核心工作流
         VERSION           # skill 的语义化版本
