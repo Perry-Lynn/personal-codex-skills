@@ -163,6 +163,20 @@ class MetricsScriptTests(unittest.TestCase):
                 result = run(self.SCRIPT, str(data), "--ratio", f"{reserved}=value/den")
                 self.assertEqual(result.returncode, 2, (reserved, result.stderr))
 
+            conflicting = root / "conflicting.csv"
+            conflicting.write_text("chapter,value,value_change\n1,8,8\n", encoding="utf-8")
+            for extra in ((), ("--value", "value")):
+                result = run(self.SCRIPT, str(conflicting), *extra)
+                self.assertEqual(result.returncode, 2, (extra, result.stderr))
+                self.assertNotIn("Traceback", result.stderr)
+
+            bad_diagnostics = root / "bad-diagnostics.csv"
+            bad_diagnostics.write_text("chapter,diagnostics,value\n1,bad-number,8\n", encoding="utf-8")
+            for extra in ((), ("--value", "value")):
+                result = run(self.SCRIPT, str(bad_diagnostics), *extra)
+                self.assertEqual(result.returncode, 2, (extra, result.stderr))
+                self.assertNotIn("Traceback", result.stderr)
+
     def test_derived_non_finite_values_are_null(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             csv_file = Path(tmp) / "overflow.csv"

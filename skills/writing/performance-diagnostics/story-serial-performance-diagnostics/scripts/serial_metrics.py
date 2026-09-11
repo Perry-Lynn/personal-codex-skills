@@ -37,6 +37,16 @@ def number(value: str | None) -> tuple[float | None, str | None]:
 OUTPUT_RESERVED_FIELDS = {"chapter", "diagnostics", "source", "row_count", "summaries", "rows"}
 
 
+def validate_input_headers(headers: list[str], chapter_col: str) -> None:
+    conflicts = [
+        header
+        for header in headers
+        if header != chapter_col and (header in OUTPUT_RESERVED_FIELDS or header.endswith("_change"))
+    ]
+    if conflicts:
+        raise InputError(f"CSV 输入字段使用输出保留名或派生字段名: {', '.join(conflicts)}")
+
+
 def parse_ratio_specs(
     specs: list[str], headers: list[str], explicit_values: list[str], chapter_col: str
 ) -> list[tuple[str, str, str]]:
@@ -100,6 +110,7 @@ def main() -> int:
         headers, rows = read_csv(args.csv_file)
         if args.chapter_col not in headers:
             raise InputError(f"缺少章节列: {args.chapter_col}")
+        validate_input_headers(headers, args.chapter_col)
 
         if len(set(args.value)) != len(args.value):
             raise InputError("--value 存在重名列")
