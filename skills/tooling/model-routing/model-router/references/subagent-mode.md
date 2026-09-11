@@ -1,16 +1,27 @@
 ---
 name: model-router
-description: Codex 软件开发双模型工作流。在功能开发、多文件修改、复杂调试或用户要求模型路由时，使用 Astra low 规划、Luna high 实施和验证，遇到架构问题重新规划。
+description: Codex 可配置子 Agent 软件开发工作流。按用户指定的 Planner 与 Executor、模型和推理强度规划、实施、验证和重新规划；未指定时默认 Astra low 规划、Luna high 实施。
 ---
 
 # Model Router
 
 将开发任务推进到有证据的完成状态，采用以下角色：
 
-| 角色 | 模型 | 推理强度 | 职责 |
+| 角色 | 默认模型 | 默认推理强度 | 职责 |
 | --- | --- | --- | --- |
 | Planner | gpt-6-astra | low | 需求、代码与架构分析、方案、影响范围、重新规划 |
 | Executor | gpt-5.6-luna | high | 修改、调试、编译、测试、验证 |
+
+## 指定模型与角色
+
+先从用户请求解析本轮 Routing Profile：
+
+```text
+Planner:  {model: <planner-model>, reasoning_effort: <planner-effort>}
+Executor: {model: <executor-model>, reasoning_effort: <executor-effort>}
+```
+
+用户可以指定模型、推理强度，或明确交换 Planner/Executor 的职责。只指定一侧时，另一侧沿用默认值；完全未指定时使用 Astra low → Luna high。模型和强度必须传给实际委派工具支持的对应字段，不能声称仅凭提示完成切换。若宿主不支持用户指定的组合，报告阻塞，不静默降级。
 
 ## 真实路由与能力边界
 
@@ -20,8 +31,8 @@ description: Codex 软件开发双模型工作流。在功能开发、多文件�
 
 当 collaboration.spawn_agent 可用且允许所需委派时：
 
-- Planner 使用 model="gpt-6-astra"、reasoning_effort="low"。
-- Executor 使用 model="gpt-5.6-luna"、reasoning_effort="high"。
+- Planner 使用 Routing Profile 中的 model 和 reasoning_effort；默认是 model="gpt-6-astra"、reasoning_effort="low"。
+- Executor 使用 Routing Profile 中的 model 和 reasoning_effort；默认是 model="gpt-5.6-luna"、reasoning_effort="high"。
 - 指定模型覆盖时使用 fork_turns="none" 并提供完整的精简交接包；不得用继承全部历史的方式假定覆盖生效。
 - 使用返回的 Agent 标识发送补充信息和接收结果。同一角色尽量复用原 Agent；不可对已运行 Agent 静默更改模型。
 - 只在主 Agent 同时有独立有用工作时委派，例如子 Agent 规划期间主 Agent 核实验收条件，实施期间主 Agent 审查接口兼容性；不要重复编辑同一文件。

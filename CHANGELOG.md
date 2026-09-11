@@ -2,10 +2,20 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.3 - 2026-09-11
+
+- Added configurable Planner and Executor selection to `model-router`.
+- Documented per-request model, reasoning strength and role assignment while retaining the Astra low → Luna high default.
+
 ## Repository 1.3.2 - 2026-09-11
 
 - Replaced the root README's flat skill descriptions with a clear top-level directory overview.
 - Added directory-level README files for writing skills, tooling skills and model routing, with links to detailed documentation.
+
+### model-router 2.1.0 - 2026-09-11
+
+- Added per-request Planner and Executor selection for models, reasoning strength and role assignment.
+- Preserved Astra low → Luna high as the default while requiring unsupported requested combinations to be reported as blocked.
 
 ## Repository 1.3.1 - 2026-09-11
 

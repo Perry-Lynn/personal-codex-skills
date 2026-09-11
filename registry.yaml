@@ -1,5 +1,5 @@
 schema_version: 1
-repository_version: 1.3.2
+repository_version: 1.3.3
 
 categories:
   writing: Fiction writing, review, publishing and visual storytelling
@@ -134,7 +134,7 @@ skills:
     summary: 依据发布后章节数据和真实反馈诊断流失、追读与转化变化
   - name: model-router
     display_name: 双对话模型协作
-    version: 2.0.1
+    version: 2.1.0
     category: tooling
     function: model-routing
     path: skills/tooling/model-routing/model-router
