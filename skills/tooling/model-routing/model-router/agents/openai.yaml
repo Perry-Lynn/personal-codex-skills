@@ -1,0 +1,6 @@
+interface:
+  display_name: "双对话模型协作"
+  short_description: "协调 Astra 规划对话与 Luna 实施对话，互读交接并完成验证"
+  default_prompt: "使用 $model-router，为下面的开发目标创建两个 Codex 对话，由 Astra 规划、Luna 实施，互读交接并验证结果。"
+policy:
+  allow_implicit_invocation: true

@@ -1,5 +1,5 @@
 schema_version: 1
-repository_version: 1.2.0
+repository_version: 1.3.0
 
 categories:
   writing: Fiction writing, review, publishing and visual storytelling
@@ -132,3 +132,17 @@ skills:
     source_path: ~/.codex/skills/story-serial-performance-diagnostics
     updated_at: 2026-08-12
     summary: 依据发布后章节数据和真实反馈诊断流失、追读与转化变化
+  - name: model-router
+    display_name: 双对话模型协作
+    version: 2.0.1
+    category: tooling
+    function: model-routing
+    path: skills/tooling/model-routing/model-router
+    documentation: docs/skills/model-router.md
+    status: active
+    visibility: public
+    compatible_with:
+      - codex
+    source_path: ~/.codex/skills/model-router
+    updated_at: 2026-09-11
+    summary: Astra 与 Luna 独立对话互读交接、单一写入、验收与恢复，保留可选子 Agent 模式

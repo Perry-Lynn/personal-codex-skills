@@ -1,8 +1,8 @@
 # Personal Codex Skills
 
-一组面向中文网络小说创作与发布检查的 Codex Skills。每个 skill 都是独立、可安装、可版本化的能力包，包含触发说明、执行流程、参考资料和可重复运行的检查脚本。
+一组面向 Codex 的个人 Skills，覆盖中文网络小说创作与发布检查，以及双模型开发协作。每个 skill 都是独立、可安装、可版本化的能力包，包含触发说明、执行流程、参考资料和可重复运行的检查脚本。
 
-当前仓库提供六个互补 skill：
+当前仓库提供六个写作 skill 和一个 Codex 工具 skill：
 
 | Skill | 解决什么问题 | 适合什么时候使用 | 当前版本 |
 |---|---|---|---|
@@ -12,6 +12,7 @@
 | [`story-originality-audit`](docs/skills/story-originality-audit.md) | 审查稿件与已知来源的表达和结构距离 | 洗稿自查、撞梗判断、同人转原创、改编审计 | 1.0.0 |
 | [`story-fanqie-compliance`](docs/skills/story-fanqie-compliance.md) | 执行番茄小说发布前的合规、低质与连续性检查 | 发布前检查、拒审诊断、合规修订、反水文审查 | 1.0.1 |
 | [`story-serial-performance-diagnostics`](docs/skills/story-serial-performance-diagnostics.md) | 用发布后数据和反馈诊断流失与转化变化 | 追读下降、完读变化、章留、评论与发布复盘 | 1.0.0 |
+| [`model-router`](docs/skills/model-router.md) | 协调 Astra 规划对话与 Luna 实施对话 | 复杂开发、双对话交接、实现与验收 | 2.0.1 |
 
 > 这些 skill 提供写作与发布前辅助，不代表平台官方意见，也不承诺作品一定通过审核或获得推荐。
 
@@ -30,6 +31,7 @@ cp -R personal-codex-skills/skills/writing/language-quality/story-chinese-proofr
 cp -R personal-codex-skills/skills/writing/originality/story-originality-audit ~/.codex/skills/
 cp -R personal-codex-skills/skills/writing/publishing-compliance/story-fanqie-compliance ~/.codex/skills/
 cp -R personal-codex-skills/skills/writing/performance-diagnostics/story-serial-performance-diagnostics ~/.codex/skills/
+cp -R personal-codex-skills/skills/tooling/model-routing/model-router ~/.codex/skills/
 ```
 
 只需要其中一个时，只复制对应目录。复制完成后重新打开 Codex 任务，使技能清单刷新。
@@ -47,6 +49,7 @@ ln -s "$(pwd)/personal-codex-skills/skills/writing/language-quality/story-chines
 ln -s "$(pwd)/personal-codex-skills/skills/writing/originality/story-originality-audit" ~/.codex/skills/story-originality-audit
 ln -s "$(pwd)/personal-codex-skills/skills/writing/publishing-compliance/story-fanqie-compliance" ~/.codex/skills/story-fanqie-compliance
 ln -s "$(pwd)/personal-codex-skills/skills/writing/performance-diagnostics/story-serial-performance-diagnostics" ~/.codex/skills/story-serial-performance-diagnostics
+ln -s "$(pwd)/personal-codex-skills/skills/tooling/model-routing/model-router" ~/.codex/skills/model-router
 ```
 
 ## 快速使用
@@ -127,6 +130,12 @@ ln -s "$(pwd)/personal-codex-skills/skills/writing/performance-diagnostics/story
 
 完整说明与脚本用法见 [`docs/skills/story-serial-performance-diagnostics.md`](docs/skills/story-serial-performance-diagnostics.md)。
 
+### model-router
+
+负责把复杂开发任务分给两个独立 Codex 对话：Astra 以 low 推理强度规划和审查，Luna 以 high 推理强度实现和测试。它通过带 ID 的消息交接计划与结果，并保持单一写入者和明确的工作树边界。
+
+完整说明见 [`docs/skills/model-router.md`](docs/skills/model-router.md)。
+
 ## 仓库结构
 
 ```text
@@ -157,7 +166,7 @@ LICENSE                   # Apache-2.0 许可证
 
 ## 开发与验证
 
-修改 skill 后，使用 Codex `skill-creator` 提供的 `quick_validate.py` 验证目录与 YAML frontmatter。仓库内五个 Python 脚本仅使用标准库，可直接运行：
+修改 skill 后，使用 Codex `skill-creator` 提供的 `quick_validate.py` 验证目录与 YAML frontmatter。仓库内 Python 脚本仅使用标准库，可直接运行：
 
 ```bash
 python3 skills/writing/prose-style/story-prose-style/scripts/style_fingerprint.py --help

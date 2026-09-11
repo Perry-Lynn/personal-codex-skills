@@ -2,6 +2,11 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.0 - 2026-09-11
+
+- Published the `model-router` Codex tooling skill under `skills/tooling/model-routing/model-router`.
+- Added public documentation, registry metadata and installation examples for the Astra low → Luna high two-dialog workflow.
+
 ## Repository 1.2.0 - 2026-08-12
 
 - Added four complementary Chinese-fiction skills for reader cold reads, language proofreading, originality auditing and post-publication performance diagnostics.
@@ -73,3 +78,19 @@ All notable skill releases and repository-level changes are recorded here.
 - Added Fanqie platform policy guidance and review rubric.
 - Added deterministic preflight checks for repeated paragraphs, engineering metadata, symbol-heavy filler, transaction redirects and platform-bypass language.
 - Integrated long-form and short-form story workflows, continuity review and post-deslop revalidation.
+
+### model-router 1.0.0 - 2026-09-11
+
+- Added Astra medium planning and Luna xhigh implementation/verification routing.
+- Defined bounded handoffs, replanning, host capability checks and transparent fallback.
+- Added Codex discovery metadata; leaves global model configuration unchanged.
+
+### model-router 2.0.0 - 2026-09-11
+
+- Changed default workflow to two explicitly authorized Codex conversations with Astra medium and Luna xhigh.
+- Added peer binding, deduplicated handoffs, review and replan states, and checkout-aware single-writer ownership.
+- Preserved subagent mode as an optional reference; no global configuration changes.
+
+### model-router 2.0.1 - 2026-09-11
+
+- Changed Planner reasoning to Astra low and Executor reasoning to Luna high in conversation and optional subagent modes.
