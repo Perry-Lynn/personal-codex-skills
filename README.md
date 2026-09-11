@@ -1,6 +1,6 @@
 # Personal Codex Skills
 
-一组面向 Codex 的个人 Skills，覆盖中文网络小说创作与发布检查，以及双模型开发协作。每个 skill 都是独立、可安装、可版本化的能力包，包含触发说明、执行流程、参考资料和可重复运行的检查脚本。
+一组面向 Codex 的个人 Skills，覆盖中文网络小说创作与发布检查，以及双模型开发协作。每个 skill 都是独立、可安装、可版本化的能力包，以 `SKILL.md` 为核心入口，并按需附带参考资料、展示元数据和确定性脚本。
 
 当前仓库分为两个用途清晰的目录：
 
@@ -31,9 +31,9 @@ skills/
       <skill-name>/
         SKILL.md          # Codex 读取的核心工作流
         VERSION           # skill 的语义化版本
-        agents/           # UI 展示元数据
-        references/       # 按需加载的规则与判定资料
-        scripts/          # 可重复运行的确定性工具
+        agents/           # UI 展示元数据（如有）
+        references/       # 按需加载的规则与判定资料（如有）
+        scripts/          # 可重复运行的确定性工具（如有）
 docs/skills/              # 面向使用者的独立说明
 registry.yaml             # skill 清单和版本权威来源
 CHANGELOG.md              # 发布记录

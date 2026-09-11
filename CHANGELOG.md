@@ -2,6 +2,10 @@
 
 All notable skill releases and repository-level changes are recorded here.
 
+## Repository 1.3.5 - 2026-09-11
+
+- Clarified that `SKILL.md` is the required skill entry point and that `agents/`, `references/` and `scripts/` are optional supporting directories.
+
 ## Repository 1.3.4 - 2026-09-11
 
 - Moved category-specific installation, quick-use, development and validation instructions into the corresponding directory README files.
