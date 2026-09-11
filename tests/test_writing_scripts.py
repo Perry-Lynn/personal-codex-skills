@@ -159,6 +159,9 @@ class MetricsScriptTests(unittest.TestCase):
             for extra in (("--ratio", "x=value"), ("--ratio", "value=value/den"), ("--ratio", "x=value/den/den")):
                 result = run(self.SCRIPT, str(data), *extra)
                 self.assertEqual(result.returncode, 2, (extra, result.stderr))
+            for reserved in ("chapter", "diagnostics", "source", "row_count", "summaries", "rows", "value_change"):
+                result = run(self.SCRIPT, str(data), "--ratio", f"{reserved}=value/den")
+                self.assertEqual(result.returncode, 2, (reserved, result.stderr))
 
     def test_derived_non_finite_values_are_null(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -170,6 +173,12 @@ class MetricsScriptTests(unittest.TestCase):
             self.assertIsNone(row["value_change"])
             self.assertTrue(any("non-finite" in diagnostic for diagnostic in row["diagnostics"]))
             self.assertIsNone(json.loads(result.stdout)["rows"][0]["rate"])
+
+            large = Path(tmp) / "large.csv"
+            large.write_text("chapter,value\n1,1e308\n2,1e308\n", encoding="utf-8")
+            result = run(self.SCRIPT, str(large), "--value", "value", "--json")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["summaries"]["value"]["mean"], 1e308)
 
 
 class FanqieScriptTests(unittest.TestCase):

@@ -34,9 +34,15 @@ def number(value: str | None) -> tuple[float | None, str | None]:
     return (parsed / 100 if is_percent else parsed), None
 
 
-def parse_ratio_specs(specs: list[str], headers: list[str]) -> list[tuple[str, str, str]]:
+OUTPUT_RESERVED_FIELDS = {"chapter", "diagnostics", "source", "row_count", "summaries", "rows"}
+
+
+def parse_ratio_specs(
+    specs: list[str], headers: list[str], explicit_values: list[str], chapter_col: str
+) -> list[tuple[str, str, str]]:
     parsed: list[tuple[str, str, str]] = []
     names: set[str] = set()
+    reserved = OUTPUT_RESERVED_FIELDS | {chapter_col, *explicit_values}
     for spec in specs:
         if spec.count("=") != 1:
             raise InputError(f"无效比率定义: {spec}")
@@ -46,8 +52,8 @@ def parse_ratio_specs(specs: list[str], headers: list[str]) -> list[tuple[str, s
         numerator, denominator = (part.strip() for part in expression.split("/", 1))
         if not name or not numerator or not denominator:
             raise InputError(f"无效比率定义: {spec}")
-        if name in names or name in headers:
-            raise InputError(f"比率名称重名或覆盖输入字段: {name}")
+        if name in names or name in headers or name in reserved or name.endswith("_change"):
+            raise InputError(f"比率名称重名或覆盖保留字段: {name}")
         if numerator not in headers or denominator not in headers:
             missing = numerator if numerator not in headers else denominator
             raise InputError(f"比率引用未知列: {missing}")
@@ -95,12 +101,12 @@ def main() -> int:
         if args.chapter_col not in headers:
             raise InputError(f"缺少章节列: {args.chapter_col}")
 
-        ratio_specs = parse_ratio_specs(args.ratio, headers)
         if len(set(args.value)) != len(args.value):
             raise InputError("--value 存在重名列")
         if any(field not in headers or field == args.chapter_col for field in args.value):
             unknown = next(field for field in args.value if field not in headers or field == args.chapter_col)
             raise InputError(f"--value 引用未知或非法列: {unknown}")
+        ratio_specs = parse_ratio_specs(args.ratio, headers, args.value, args.chapter_col)
 
         if args.value:
             fields = list(args.value)
@@ -164,7 +170,9 @@ def main() -> int:
                 "count": len(values),
                 "min": min(values) if values else None,
                 "max": max(values) if values else None,
-                "mean": sum(values) / len(values) if values else None,
+                # Scale before summing so two finite 1e308 values do not
+                # overflow merely because the arithmetic is computing a mean.
+                "mean": math.fsum(value / len(values) for value in values) if values else None,
             }
         result = {"source": str(args.csv_file), "row_count": len(rows), "summaries": summaries, "rows": output_rows}
         if args.json:

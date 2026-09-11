@@ -29,4 +29,4 @@ python3 skills/writing/performance-diagnostics/story-serial-performance-diagnost
 
 最低字段和指标口径见 skill 的 `references/data-contract.md`。数据诊断定位异常，`story-review` 验证文本问题，写作 skill 执行内容修订并维护追踪。
 
-脚本按 CSV 原始行顺序计算；缺失、非法、`NaN` 或无穷数值输出为 `null` 并记录行级 `diagnostics`，缺失会断开变化基准。末尾单个 `%` 转为比例（`50%` → `0.5`），普通 `50` 不转换。显式列、比率引用和比率名称必须存在且不重名，零分母为 `null` 并诊断；契约或输入错误返回 `2`，有效分析完成返回 `0`。
+脚本按 CSV 原始行顺序计算；缺失、非法、`NaN` 或无穷数值输出为 `null` 并记录行级 `diagnostics`，缺失会断开变化基准。末尾单个 `%` 转为比例（`50%` → `0.5`），普通 `50` 不转换。显式列、比率引用和比率名称必须存在且不重名；比率名称不得覆盖 `chapter`、`diagnostics`、结果保留字段、显式数值列或任意 `*_change` 字段。均值采用稳定求和，有限输入不会因累加溢出；零分母为 `null` 并诊断。契约或输入错误返回 `2`，有效分析完成返回 `0`。
